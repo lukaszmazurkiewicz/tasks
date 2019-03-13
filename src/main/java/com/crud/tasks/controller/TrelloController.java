@@ -13,6 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1/trello")
 public class TrelloController {
+    private static final String KODILLA = "Kodilla";
     private final TrelloClient trelloClient;
 
     @Autowired
@@ -26,8 +27,11 @@ public class TrelloController {
         List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
 
         Optional<TrelloBoardDto> result = trelloBoards.stream()
-                .filter(trelloBoardDto -> !trelloBoardDto.getId().isEmpty() && !trelloBoardDto.getName().isEmpty())
-                .filter(trelloBoardDto -> trelloBoardDto.getName().contains("Kodilla"))
+
+                .filter(trelloBoardDto -> trelloBoardDto.getId() != null)
+                .filter(trelloBoardDto -> !trelloBoardDto.getId().isEmpty())
+                .filter(trelloBoardDto -> !trelloBoardDto.getName().isEmpty())
+                .filter(trelloBoardDto -> trelloBoardDto.getName().contains(KODILLA))
                 .findAny();
 
         System.out.println(result.get().getId() + " " + result.get().getName());
