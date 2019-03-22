@@ -21,17 +21,11 @@ public class EmailScheduler {
     @Autowired
     private AdminConfig adminConfig;
 
-    private String suffix = "";
-
-    @Scheduled(cron = "0 0 10 * * *")
-    //@Scheduled(fixedDelay = 10000)
+    //@Scheduled(cron = "0 0 10 * * *")
+    @Scheduled(fixedDelay = 10000)
     public void sendInformationEmail() {
         long size = taskRepository.count();
-        if (size != 1) {
-            suffix = "s";
-        } else {
-            suffix = "";
-        }
+        String suffix = size > 1 ? "s" : "";
         simpleEmailService.send(new Mail(
                 adminConfig.getAdminMail(),
                 SUBJECT,
