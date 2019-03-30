@@ -105,5 +105,4 @@ public class TrelloClientTest {
         assertEquals(0, boards.size());
         assertTrue(boards.isEmpty());
     }
-
 }
