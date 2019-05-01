@@ -36,7 +36,7 @@ public class EmailScheduler {
                 "Currently in database you got: " + size + " task" + suffix));
     }
 
-    @Scheduled(fixedDelay = 10000)
+    //@Scheduled(fixedDelay = 10000)
     public void sendDailyMail() {
         howManyTasksService.send(new Mail(
                 adminConfig.getAdminMail(),
