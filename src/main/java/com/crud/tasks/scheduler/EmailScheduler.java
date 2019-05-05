@@ -3,6 +3,7 @@ package com.crud.tasks.scheduler;
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Mail;
 import com.crud.tasks.repository.TaskRepository;
+import com.crud.tasks.service.HowManyTaskMailCreator;
 import com.crud.tasks.service.SimpleEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,6 +15,9 @@ public class EmailScheduler {
 
     @Autowired
     private SimpleEmailService simpleEmailService;
+
+    @Autowired
+    private HowManyTaskMailCreator howManyTasksService;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -30,6 +34,16 @@ public class EmailScheduler {
                 adminConfig.getAdminMail(),
                 SUBJECT,
                 "Currently in database you got: " + size + " task" + suffix));
+    }
+
+    @Scheduled(fixedDelay = 10000)
+    public void sendDailyMail() {
+        howManyTasksService.send(new Mail(
+                adminConfig.getAdminMail(),
+                SUBJECT,
+                "Hello"
+        ));
+
     }
 
 }
